@@ -2,7 +2,7 @@ import Joi from "joi";
 const envSchema = Joi.object()
   .keys({
     PORT: Joi.number().default(3000).description("port number"),
-    DB_UR: Joi.string()
+    DB_URL: Joi.string()
       .default("mongodb://localhost:27017/blog-website")
       .description("mongodb url"),
     NODE_ENV: Joi.string().default("production").required(),

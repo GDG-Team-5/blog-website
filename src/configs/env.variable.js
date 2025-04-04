@@ -17,7 +17,7 @@ if (error) {
 
 export const envVar = {
   port: env.PORT || 3000,
-  dataBaseUrl: env.Db_URL,
+  dataBaseUrl: env.DB_URL,
   env: env.NODE_ENV,
   token: {
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
