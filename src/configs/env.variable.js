@@ -15,7 +15,7 @@ if (error) {
   throw new Error(`Environment validation error: ${error.message}`);
 }
 
-export const envConfig = {
+export const envVar = {
   port: env.PORT || 3000,
   dataBaseUrl: env.Db_URL,
   env: env.NODE_ENV,
