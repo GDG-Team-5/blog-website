@@ -7,4 +7,11 @@ const register = handleCatchError(async (req, res) => {
   res.status(201).json({ message, user });
 });
 
-export default { register };
+//login user middleware
+const login = handleCatchError(async (req, res) => {
+  const { email, password } = req.body;
+  const { message, token } = await authService.login(email, password);
+  res.status(200).json({ message, token });
+});
+
+export default { register, login };

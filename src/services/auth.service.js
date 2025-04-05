@@ -1,10 +1,9 @@
 import { User } from "../models/index.js";
-import { CustomError } from "../utils/index.js";
+import { CustomError, handleCatchError } from "../utils/index.js";
 
 //Function to register a new user
 const register = async (userData) => {
   const { userName, email, password } = userData;
-
   if (await User.isEmailUsed(email)) {
     throw new CustomError(400, "Email already exists", true);
   }
@@ -15,4 +14,17 @@ const register = async (userData) => {
   return { message: "User registered successfully", user: user };
 };
 
-export default { register };
+//Function to login a user
+const login = async (email, password) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new CustomError(400, "Invalid email or password", true);
+  }
+  const isMatch = await user.verifyPassword(password);
+  if (!isMatch) {
+    throw new CustomError(400, "Invalid email or password", true);
+  }
+  return { message: "Login successful", token: "" };
+};
+
+export default { register, login };
