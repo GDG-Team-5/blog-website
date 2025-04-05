@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import { format, isEmailUsed, verifyPassword } from "./plugin.js";
 //user  schema
 const userSchema = new mongoose.Schema(
   {
@@ -34,6 +35,11 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+//add plugins
+userSchema.plugin(format, "toJSON");
+userSchema.plugin(format, "toObject");
+userSchema.plugin(isEmailUsed);
+userSchema.plugin(verifyPassword);
 
 const User = mongoose.model("User", userSchema);
 export default User;

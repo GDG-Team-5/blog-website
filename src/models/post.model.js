@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { title } from "process";
+import { format } from "./plugin.js";
 //post model
 
 const postSchema = new mongoose.Schema({
@@ -24,5 +24,8 @@ const postSchema = new mongoose.Schema({
   },
 });
 
+//add plugins
+postSchema.plugin(format, "toJSON");
+postSchema.plugin(format, "toObject");
 const Post = mongoose.model("Post", postSchema);
 export default Post;
