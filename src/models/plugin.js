@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { CustomError } from "../utils/custom.error.js";
+import { CustomError } from "../utils/index.js";
 
 // This function is used to format the output of the Mongoose schema
 const format = (schema, option) => {

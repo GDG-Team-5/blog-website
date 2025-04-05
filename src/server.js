@@ -4,6 +4,7 @@ import app from "./app.js";
 
 const sever = app.listen(envVar.port, async () => {
   console.log(`Server is running on port ${envVar.port}`);
+  console.log(`http://localhost:${envVar.port}`);
   await connectDB();
 });
 
