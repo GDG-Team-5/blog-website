@@ -14,4 +14,11 @@ const login = handleCatchError(async (req, res) => {
   res.status(200).json({ message, token });
 });
 
-export default { register, login };
+const logout = handleCatchError(async (req, res) => {
+  const user = { id: "1" };
+  const { id } = user;
+  const { message } = await authService.logout(id);
+  res.status(200).json({ message });
+});
+
+export default { register, login, logout };

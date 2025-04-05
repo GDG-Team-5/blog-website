@@ -27,4 +27,10 @@ const login = async (email, password) => {
   return { message: "Login successful", token: "" };
 };
 
-export default { register, login };
+const logout = async (id) => {
+  //implemtent logout functionality here
+  //for now we will just return a message
+  return { message: "Logout successful" };
+};
+
+export default { register, login, logout };
