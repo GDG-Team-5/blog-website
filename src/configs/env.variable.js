@@ -24,5 +24,6 @@ export const envVar = {
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
     resetPasswordToknExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
     emailVerificationTokenEXp: env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
+    jwtSecret: env.JWT_SECRET,
   },
 };

@@ -10,6 +10,7 @@ const envSchema = Joi.object()
     REFRESH_TOKEN_EXPIRES_IN_DAYS: Joi.number().required(),
     RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES: Joi.number().required(),
     EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS: Joi.number().required(),
+    JWT_SECRET: Joi.string().required(),
   })
   .unknown();
 export default envSchema;
