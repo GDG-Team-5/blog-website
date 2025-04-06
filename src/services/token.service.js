@@ -27,6 +27,8 @@ const verifyToken = async (token) => {
   }
 };
 
-const saveToken = async (userId, token) => {};
+const saveToken = async (userId, token) => {
+  //implement the logic to save the token in the database
+};
 
 export default { generateToken };
