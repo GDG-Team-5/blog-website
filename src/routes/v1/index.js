@@ -1,14 +1,19 @@
 import express from "express";
-import authRouter from "./auth.route.js";
-const Router = express.Router();
-const routes = [
-  {
-    path: "/auth",
-    route: authRouter,
-  },
-];
-routes.forEach((route) => {
-  Router.use(route.path, route.route);
-});
+import authRoutes from "./auth.route.js";
+import { authenticate } from "../../middlewares/auth.middleware.js"; 
+import {
+  getProfile,
+  updateProfile,
+  validateUpdateProfile,
+} from "../../controllers/profile.controller.js"; 
+import { validate } from "../../middlewares/validation.middleware.js";//general validation middleware 
+const router = express.Router();
 
-export default Router;
+
+router.use("/auth", authRoutes);
+router.get("/profile", authenticate, getProfile);
+router.put('/profile', authenticate, validateUpdateProfile, validate, updateProfile);
+
+
+export default router;
+

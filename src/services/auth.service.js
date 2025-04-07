@@ -1,7 +1,11 @@
 import { User } from "../models/index.js";
-import { CustomError, handleCatchError } from "../utils/index.js";
+import { CustomError } from "../utils/index.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-//Function to register a new user
+dotenv.config(); // Load environment variables if not already loaded
+
+// Function to register a new user
 const register = async (userData) => {
   const { userName, email, password } = userData;
   if (await User.isEmailUsed(email)) {
@@ -14,7 +18,7 @@ const register = async (userData) => {
   return { message: "User registered successfully", user: user };
 };
 
-//Function to login a user
+// Function to login a user
 const login = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
@@ -24,12 +28,19 @@ const login = async (email, password) => {
   if (!isMatch) {
     throw new CustomError(400, "Invalid email or password", true);
   }
-  return { message: "Login successful", token: "" };
+
+  // Generate JWT token
+  const payload = { id: user._id }; // Include user ID in the payload
+  const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.ACESS_TOKEN_EXPIRES_IN_MINUTES + "m", // Use the expiration time from .env
+  });
+
+  return { message: "Login successful", token };
 };
 
 const logout = async (id) => {
-  //implemtent logout functionality here
-  //for now we will just return a message
+  // Implement logout functionality here (e.g., invalidating token)
+  // For now, we will just return a message
   return { message: "Logout successful" };
 };
 
