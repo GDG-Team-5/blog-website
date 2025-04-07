@@ -12,22 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-//api
-app.use("/api/v1", APIRoute);
-
-// //unknown api handler
-app.all("/*unknown", (req, res, next) => {
-  const message = `${req.originalUrl} not found`;
-  const statusCode = 404;
-  const error = new CustomError(statusCode, message, true);
-  next(error);
-});
-
-//error handlers
-app.use(errorHandler.convertError);
-app.use(errorHandler.handleGlobalError);
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "super-secret-key",
@@ -45,5 +29,20 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 initializeGoogleAuth();
+
+//api
+app.use("/api/v1", APIRoute);
+
+// //unknown api handler
+app.all("/*unknown", (req, res, next) => {
+  const message = `${req.originalUrl} not found`;
+  const statusCode = 404;
+  const error = new CustomError(statusCode, message, true);
+  next(error);
+});
+
+//error handlers
+app.use(errorHandler.convertError);
+app.use(errorHandler.handleGlobalError);
 
 export default app;

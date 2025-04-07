@@ -1,3 +1,4 @@
 import authService from "./auth.service.js";
+import tokenService from "./token.service.js";
 
-export { authService };
+export { authService, tokenService };

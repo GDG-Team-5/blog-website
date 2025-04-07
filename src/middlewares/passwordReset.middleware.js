@@ -1,4 +1,4 @@
-import User from "../models/users.model.js";
+import { User } from "../models/index.js";
 export const requestingUser = async (req, res, next) => {
   const { email } = req.body;
   try {
