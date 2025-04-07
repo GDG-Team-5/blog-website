@@ -1,12 +1,12 @@
-import { tokenService } from "../services/index.js";
+import { tokenService, userService } from "../services/index.js";
 
 export const protectRoute = async (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (!token) {
-    return res
-      .status(403)
-      .json({ message: "Unauthorized - no token provided." });
+  try {
+    const token = req.cookies.jwt;
+    const decoded = await tokenService.verifyToken(token);
+    req.user = await userService.getUserById(decoded.sub);
+    next();
+  } catch (error) {
+    next(error);
   }
-  req.user = await tokenService.verifyToken(token);
-  next();
 };
