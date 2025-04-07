@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import { envVar } from "../configs/env.variable.js";
 import { CustomError } from "../utils/index.js";
 import { User, Token } from "../models/index.js";
+import { userService } from "../services/index.js";
 const { sign, verify } = jwt;
-
 const generateToken = (id, tokenType, expiresIn, res) => {
   const payload = {
     sub: id,
@@ -25,22 +25,11 @@ const generateToken = (id, tokenType, expiresIn, res) => {
 };
 
 const verifyToken = async (token) => {
-  try {
-    const decoded = verify(token, envVar.token.jwtSecret);
-
-    //update
-    if (!decoded) {
-      return res.status(401).json({ message: "Unauthorized - Invalid token." });
-    }
-
-    const user = await User.findById(decoded.sub);
-    if (!user) {
-      throw new CustomError(401, "User not found", true);
-    }
-    return user;
-  } catch (error) {
-    throw new CustomError(401, "Invalid token", true);
+  const decoded = verify(token, envVar.token.jwtSecret);
+  if (!decoded) {
+    throw new CustomError(403, "Unauthorized - Invalid token.", true);
   }
+  return decoded;
 };
 
 const saveToken = async (userId, token) => {

@@ -1,3 +1,3 @@
 import errorHandler from "./error.handler.js";
-
-export { errorHandler };
+import { protectRoute, checkUser } from "./auth.js";
+export { errorHandler, protectRoute, checkUser };
