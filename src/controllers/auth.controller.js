@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-import { authService } from "../services/index.js";
-import { handleCatchError } from "../utils/index.js";
-
-//register user middleware
-const register = handleCatchError(async (req, res) => {
-  const { message, user } = await authService.register(req.body);
-  res.status(201).json({ message, user });
-});
-
-//login user middleware
-const login = handleCatchError(async (req, res) => {
-  const { email, password } = req.body;
-  const { message, token } = await authService.login(email, password);
-  res.status(200).json({ message, token });
-});
-
-const logout = handleCatchError(async (req, res) => {
-  const user = { id: "1" };
-  const { id } = user;
-  const { message } = await authService.logout(id);
-  res.status(200).json({ message });
-});
-
-export default { register, login, logout };
-=======
 import { authService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 import { User } from "../models/index.js";
@@ -180,4 +154,3 @@ passport.deserializeUser(async (id, done) => {
 export const initializeGoogleAuth = () => {};
 
 export default { register, login, logout, passwordResetRequest, resetPassword };
->>>>>>> d7ecc22599000fdc65845647780015dc7cb8f7b8
