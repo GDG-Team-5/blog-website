@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { format } from "./plugin.js";
+import { required } from "joi";
 //post model
 
 const postSchema = new mongoose.Schema({
@@ -11,6 +12,11 @@ const postSchema = new mongoose.Schema({
   content: {
     type: String,
     required: [true, "Content is required"],
+    trim: true,
+  },
+  category: {
+    type: String,
+    required: [true, "Category is required"],
     trim: true,
   },
   img: {
