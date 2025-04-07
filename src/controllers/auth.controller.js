@@ -1,16 +1,16 @@
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { authService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 import { User } from "../models/index.js";
-import bcrypt from "bcryptjs";
-import crypto from "crypto";
-import sendEmail from "../services/sendEmail.js";
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import dotenv from "dotenv";
-dotenv.config();
+import { emailService } from "../services/index.js";
+import { envVar } from "../configs/env.variable.js";
+
 const googleAuthConfig = {
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  clientID: envVar.googeClient.id,
+  clientSecret: envVar.googeClient.secret,
   callbackURL: "http://localhost:5000/api/auth/google/callback",
   passReqToCallback: true,
 };
@@ -54,7 +54,7 @@ const passwordResetRequest = async (req, res) => {
         message: `Here is a link to reset Your password. If You did'nt request for a password reset simply ignore this message\n\n${resetURL}\n\nThe link expires in 10 minutes.`,
         subject: "reset your password",
       };
-      await sendEmail(resetMessage);
+      await emailService.sendEmail(resetMessage);
       res.status(200).json({
         status: "success",
         message: "Password reset email sent successfully.",

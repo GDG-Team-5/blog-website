@@ -1,7 +1,6 @@
-//authentication and autherization middleware goes here
-
 import { tokenService } from "../services/index.js";
-export const protectRout = async (req, res, next) => {
+
+export const protectRoute = async (req, res, next) => {
   const token = req.cookies.jwt;
   if (!token) {
     return res
