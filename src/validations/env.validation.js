@@ -11,6 +11,14 @@ const envSchema = Joi.object()
     RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES: Joi.number().required(),
     EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS: Joi.number().required(),
     JWT_SECRET_KEY: Joi.string().required(),
+    MAILTRAP_USERNAME: Joi.string().required(),
+    MAILTRAP_PASSWORD: Joi.string().required(),
+    MAILTRAP_HOST: Joi.string().required(),
+
+    GOOGLE_CLIENT_ID: Joi.string().required(),
+    GOOGLE_CLIENT_SECRET: Joi.string().required(),
+    SESSION_SECRET: Joi.string().required(),
+    MAILTRAP_PORT: Joi.string().required(),
   })
   .unknown();
 export default envSchema;

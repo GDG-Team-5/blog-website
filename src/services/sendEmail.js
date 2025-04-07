@@ -1,14 +1,12 @@
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config;
-
+import { envVar } from "../configs/env.variable.js";
 const sendEmail = async (option) => {
   const transporter = nodemailer.createTransport({
-    host: process.env.MAILTRAP_HOST,
-    port: process.env.MAILTRAP_PORT,
+    host: envVar.mailtrap.host,
+    port: envVar.mailtrap.port,
     auth: {
-      user: process.env.MAILTRAP_USERNAME,
-      pass: process.env.MAILTRAP_PASSWORD,
+      user: envVar.mailtrap.userName,
+      pass: envVar.mailtrap.password,
     },
   });
 

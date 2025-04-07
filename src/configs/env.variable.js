@@ -26,4 +26,17 @@ export const envVar = {
     emailVerificationTokenEXp: env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
     jwtSecret: env.JWT_SECRET_KEY,
   },
+  mailtrap: {
+    userName: env.MAILTRAP_USERNAME,
+    password: env.MAILTRAP_PASSWORD,
+    host: env.MAILTRAP_HOST,
+    port: env.MAILTRAP_PORT,
+  },
+  googeClient: {
+    id: env.GOOGLE_CLIENT_ID,
+    secret: env.GOOGLE_CLIENT_SECRET,
+  },
+  session: {
+    secret: env.SESSION_SECRET,
+  },
 };

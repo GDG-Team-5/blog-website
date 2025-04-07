@@ -19,7 +19,7 @@ const generateToken = (id, tokenType, expiresIn, res) => {
     maxAge: 7 * 24 * 3600 * 1000,
     httpOnly: true,
     sameSite: "strict",
-    secure: process.env.NODE_ENV !== "development",
+    secure: envVar.env !== "development",
   });
   return token;
 };

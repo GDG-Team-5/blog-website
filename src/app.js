@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { initializeGoogleAuth } from "./controllers/auth.controller.js";
 import passport from "passport";
-
+import { envVar } from "./configs/env.variable.js";
 const app = express();
 
 app.use(express.json());
@@ -14,12 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "super-secret-key",
+    secret: envVar.session.secret,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: envVar.env === "production",
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "strict",
     },
