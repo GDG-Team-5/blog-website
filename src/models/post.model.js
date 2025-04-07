@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import { format } from "./plugin.js";
-import { required } from "joi";
-//post model
 
+//post model
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
