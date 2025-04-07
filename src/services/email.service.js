@@ -15,8 +15,23 @@ const sendEmail = async (option) => {
     to: option.email,
     subject: option.subject,
     text: option.message,
+    html: option.html,
   };
-  await transporter.sendMail(emailOptions);
+  return await transporter.sendMail(emailOptions);
 };
 
-export default { sendEmail };
+const sendResetPasswordLink = async (email, token) => {
+  mailOption = {
+    subject: "Reset Password",
+    html: `<form action="${envVar.serverUrl}api/v1/auth/reset-password" method="POST">
+    <input type="hidden" name="token" value="${token}" />
+    <input type="password" name="password" value="" placeholder="New Password"/>
+    <button type="submit">Click here to reset your password</button>
+  </form>`,
+    email: email,
+  };
+
+  await sendEmail(mailOptions);
+};
+
+export default { sendEmail, sendResetPasswordLink };

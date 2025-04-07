@@ -1,27 +1,19 @@
 import jwt from "jsonwebtoken";
+import { DateTime } from "luxon";
 import { envVar } from "../configs/env.variable.js";
 import { CustomError } from "../utils/index.js";
 import { User, Token } from "../models/index.js";
-import { userService } from "../services/index.js";
+import { tokenTypes } from "../configs/token.types.js";
 const { sign, verify } = jwt;
-const generateToken = (id, tokenType, expiresIn, res) => {
+
+const generateToken = (id, tokenType, expiresIn) => {
   const payload = {
     sub: id,
     type: tokenType,
     iat: Date.now().toUnixInteger(),
     exp: expiresIn.toUnixInteger(),
   };
-
-  //updated
-  const token = sign(payload, envVar.token.jwtSecret);
-
-  res.cookie("jwt", token, {
-    maxAge: 7 * 24 * 3600 * 1000,
-    httpOnly: true,
-    sameSite: "strict",
-    secure: envVar.env !== "development",
-  });
-  return token;
+  return sign(payload, envVar.token.jwtSecret);
 };
 
 const verifyToken = async (token) => {
@@ -32,8 +24,26 @@ const verifyToken = async (token) => {
   return decoded;
 };
 
-const saveToken = async (userId, token) => {
-  //implement the logic to save the token in the database
+const saveToken = async (userId, token, tokenType) => {
+  const savedToken = await Token.create({
+    token: token,
+    user: userId,
+    type: tokenType,
+    blacklisted: false,
+  });
+  if (!savedToken) {
+    throw new CustomError(403, "token creation error.", false);
+  }
+  return savedToken;
 };
 
-export default { generateToken, verifyToken };
+const generateResetToken = async (userId) => {
+  const tokenType = tokenTypes.resetPassword;
+  const expiresIn = DateTime.now().plus({
+    seconds: envVar.token.resetPasswordToknExp,
+  });
+  resetToken = generateToken(userId, tokenType, expiresIn);
+  await saveToken(userId, resetToken, tokenType);
+  return resetToken;
+};
+export default { generateToken, verifyToken, generateResetToken };

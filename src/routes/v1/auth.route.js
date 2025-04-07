@@ -10,7 +10,7 @@ Router.route("/logout").post(authController.logout);
 Router.route("/reset-password").post(authController.resetPassword);
 Router.route("/reset-password/request").post(
   checkUser,
-  authController.passwordResetRequest
+  authController.handlePasswordResetRequest
 );
 // Router.route("/google").post("")
 

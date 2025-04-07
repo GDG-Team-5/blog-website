@@ -2,7 +2,7 @@ import { tokenService, userService } from "../services/index.js";
 
 const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.headers["Autherization"].splite[1];
     const decoded = await tokenService.verifyToken(token);
     req.user = await userService.getUserById(decoded.sub);
     next();

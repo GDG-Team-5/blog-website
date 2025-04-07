@@ -19,10 +19,6 @@ const tokenschema = new mongoose.Schema(
       enum: Object.values(tokenTypes),
       required: true,
     },
-    expires: {
-      type: Date,
-      required: true,
-    },
     blacklisted: {
       type: Boolean,
       default: false,

@@ -1,5 +1,11 @@
+import { DateTime } from "luxon";
 import { User } from "../models/index.js";
-import { CustomError, handleCatchError } from "../utils/index.js";
+import { CustomError } from "../utils/index.js";
+import tokenService from "./token.service.js";
+import userService from "./user.service.js";
+import { tokenTypes } from "../configs/token.types.js";
+import { envVar } from "../configs/env.variable.js";
+import emailService from "./email.service.js";
 
 //Function to register a new user
 const register = async (userData) => {
@@ -24,7 +30,12 @@ const login = async (email, password) => {
   if (!isMatch) {
     throw new CustomError(400, "Invalid email or password", true);
   }
-  return { message: "Login successful", token: "" };
+  const token = tokenService.generateToken(
+    user.id,
+    tokenTypes.accessToken,
+    DateTime.now().plus({ minutes: envVar.token.acessTokenExp })
+  );
+  return { message: "Login successfully", token: token };
 };
 
 const logout = async (req, res) => {
@@ -45,4 +56,30 @@ const logout = async (req, res) => {
   }
 };
 
-export default { register, login, logout };
+const handlePasswordResetRequest = async (email) => {
+  const user = await userService.getUserByEmail(email);
+  const resetToken = await tokenService.generateResetToken(user.id);
+  await emailService.sendResetPasswordLink(email, resetToken);
+  return { message: "Password reset link sent to your email." };
+};
+
+const resetPassword = async (token, newPassword) => {
+  const decoded = await tokenService.verifyToken(token);
+  const user = await User.findById(decoded.sub);
+  if (!user) {
+    throw new CustomError(400, "Invalid token", true);
+  }
+  user.password = newPassword;
+  user.tokenExpiration = null;
+  user.resetToken = null;
+  await user.save();
+  return { message: "Password reset successfully" };
+};
+
+export default {
+  register,
+  login,
+  logout,
+  handlePasswordResetRequest,
+  resetPassword,
+};

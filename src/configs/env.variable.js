@@ -19,6 +19,7 @@ export const envVar = {
   port: env.PORT || 3000,
   dataBaseUrl: env.DB_URL,
   env: env.NODE_ENV,
+  serverUrl: env.SERVER_URL,
   token: {
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
