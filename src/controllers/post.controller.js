@@ -11,11 +11,13 @@ const getAllPosts = handleCatchError(async (req, res) => {
   const posts = await postService.getAllPosts();
   res.status(200).json(posts);
 });
+
 const updatePost = handleCatchError(async (req, res) => {
   const postId = req.params.id;
   const updatedPost = await postService.updatePost(postId, req.body);
   res.status(200).json(updatedPost);
 });
+
 const deletePost = handleCatchError(async (req, res) => {
   const postId = req.params.id;
   await postService.deletePost(postId);
