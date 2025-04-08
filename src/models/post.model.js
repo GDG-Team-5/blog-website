@@ -20,7 +20,6 @@ const postSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    required: [true, "Image is required"],
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
