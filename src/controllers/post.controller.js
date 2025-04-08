@@ -20,8 +20,10 @@ const updatePost = handleCatchError(async (req, res) => {
 
 const deletePost = handleCatchError(async (req, res) => {
   const postId = req.params.id;
-  await postService.deletePost(postId);
-  res.status(204).json({ message: "Post deleted successfully" });
+  const deletedPost = await postService.deletePost(postId);
+  res
+    .status(200)
+    .json({ deletePost: deletePost, message: "Post deleted successfully" });
 });
 
 export default { createPost, getAllPosts, updatePost, deletePost };
