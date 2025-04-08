@@ -1,6 +1,7 @@
 import express from "express";
 import authRouter from "./auth.route.js";
 import profileRoute from "./profile.route.js";
+import postRoute from "./post.route.js";
 const Router = express.Router();
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: "/profile",
     route: profileRoute,
+  },
+  {
+    path: "/posts",
+    route: postRoute,
   },
 ];
 routes.forEach((route) => {
