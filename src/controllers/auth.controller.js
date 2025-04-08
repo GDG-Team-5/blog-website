@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { CustomError, handleCatchError } from "../utils/index.js";
 import { User } from "../models/index.js";
-import { authService, tokenService } from "../services/index.js";
+import { authService, tokenService, userService } from "../services/index.js";
 import { envVar } from "../configs/env.variable.js";
 
 const googleAuthConfig = {
@@ -38,7 +38,11 @@ const handlePasswordResetRequest = handleCatchError(async (req, res) => {
 });
 const resetPassword = handleCatchError(async (req, res) => {
   const { token, newPassword } = req.body;
-  console.log("resetPassword", token, newPassword);
+  const decoded = await tokenService.verifyToken(token);
+  const user = await User.findById(decoded.sub);
+  if (!user) {
+    throw new CustomError(403, "Invalid Token", true);
+  }
   const { message } = await authService.resetPassword(token, newPassword);
   res.status(200).json({ message });
 });
