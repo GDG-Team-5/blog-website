@@ -23,15 +23,25 @@ export const envVar = {
   token: {
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
-    resetPasswordToknExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
+    resetPasswordToknExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_SECONDS,
     emailVerificationTokenEXp: env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
     jwtSecret: env.JWT_SECRET_KEY,
   },
-  mailtrap: {
-    userName: env.MAILTRAP_USERNAME,
-    password: env.MAILTRAP_PASSWORD,
-    host: env.MAILTRAP_HOST,
-    port: env.MAILTRAP_PORT,
+  // mailtrap: {
+  //   userName: env.MAILTRAP_USERNAME,
+  //   password: env.MAILTRAP_PASSWORD,
+  //   host: env.MAILTRAP_HOST,
+  //   port: env.MAILTRAP_PORT,
+  // },
+
+  mail: {
+    host: env.EMAIL_HOST,
+    port: env.EMAIL_PORT,
+    secure: env.EMAIL_SECURE,
+    from: env.EMAIL_FROM,
+    userName: env.USER_EMAIL,
+    password: env.USER_PASSWORD,
+    appName: env.APP_NAME,
   },
   googeClient: {
     id: env.GOOGLE_CLIENT_ID,

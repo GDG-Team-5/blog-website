@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import { handleCatchError } from "../utils/index.js";
+import { CustomError, handleCatchError } from "../utils/index.js";
 import { User } from "../models/index.js";
-import { authService } from "../services/index.js";
+import { authService, tokenService } from "../services/index.js";
 import { envVar } from "../configs/env.variable.js";
 
 const googleAuthConfig = {
@@ -36,13 +36,18 @@ const handlePasswordResetRequest = handleCatchError(async (req, res) => {
   const { message } = await authService.handlePasswordResetRequest(email);
   res.status(200).json({ message });
 });
-
 const resetPassword = handleCatchError(async (req, res) => {
   const { token, newPassword } = req.body;
+  console.log("resetPassword", token, newPassword);
   const { message } = await authService.resetPassword(token, newPassword);
   res.status(200).json({ message });
 });
-
+const sentResetPasswordForm = handleCatchError(async (req, res) => {
+  const { token } = req.query;
+  const decoded = tokenService.verifyToken(token);
+  const resetForm = authService.CreateRsetForm(token);
+  res.status(200).send(resetForm);
+});
 // GOOGLE AUTH
 const googleVerifyCallback = async (
   request,
@@ -101,4 +106,7 @@ export default {
   logout,
   handlePasswordResetRequest,
   resetPassword,
+  sentResetPasswordForm,
+  googleVerifyCallback,
+  googleAuthConfig,
 };

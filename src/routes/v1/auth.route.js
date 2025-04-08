@@ -7,11 +7,12 @@ const Router = express.Router();
 Router.route("/register").post(authController.register);
 Router.route("/login").post(authController.login);
 Router.route("/logout").post(authController.logout);
-Router.route("/reset-password").post(authController.resetPassword);
 Router.route("/reset-password/request").post(
   checkUser,
   authController.handlePasswordResetRequest
 );
+Router.route("/reset-password-form").get(authController.sentResetPasswordForm);
+Router.route("/reset-password").post(authController.resetPassword);
 // Router.route("/google").post("")
 
 export default Router;

@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { CustomError } from "./utils/index.js";
 import { errorHandler } from "./middlewares/index.js";
 import APIRoute from "./routes/v1/index.js";
@@ -8,7 +9,7 @@ import { initializeGoogleAuth } from "./controllers/auth.controller.js";
 import passport from "passport";
 import { envVar } from "./configs/env.variable.js";
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

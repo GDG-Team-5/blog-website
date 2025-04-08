@@ -10,7 +10,7 @@ const generateToken = (id, tokenType, expiresIn) => {
   const payload = {
     sub: id,
     type: tokenType,
-    iat: Date.now().toUnixInteger(),
+    iat: DateTime.now().toUnixInteger(),
     exp: expiresIn.toUnixInteger(),
   };
   return sign(payload, envVar.token.jwtSecret);
@@ -42,7 +42,7 @@ const generateResetToken = async (userId) => {
   const expiresIn = DateTime.now().plus({
     seconds: envVar.token.resetPasswordToknExp,
   });
-  resetToken = generateToken(userId, tokenType, expiresIn);
+  const resetToken = generateToken(userId, tokenType, expiresIn);
   await saveToken(userId, resetToken, tokenType);
   return resetToken;
 };

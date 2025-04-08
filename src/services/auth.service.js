@@ -75,6 +75,16 @@ const resetPassword = async (token, newPassword) => {
   await user.save();
   return { message: "Password reset successfully" };
 };
+const CreateRsetForm = (token) => {
+  const resetLink = `${envVar.serverUrl}/api/v1/auth/reset-password`;
+  const resetHtml = ` <form action=${resetLink} method="POST">
+      <input type="hidden" name="token" value="${token}" />
+      <label for="newPassword">New Password:</label>
+      <input type="password" name="newPassword" required />
+      <button type="submit">Reset Password</button>
+    </form>`;
+  return resetHtml;
+};
 
 export default {
   register,
@@ -82,4 +92,5 @@ export default {
   logout,
   handlePasswordResetRequest,
   resetPassword,
+  CreateRsetForm,
 };
