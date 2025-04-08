@@ -63,3 +63,5 @@ const deletePost = async (postId) => {
   await removeFromUserFeed(deletedPost.author, postId);
   return deletedPost;
 };
+
+export default { createPost, getAllPosts, updatePost, deletePost };
