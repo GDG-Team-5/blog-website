@@ -38,18 +38,13 @@ const handlePasswordResetRequest = handleCatchError(async (req, res) => {
 });
 const resetPassword = handleCatchError(async (req, res) => {
   const { token, newPassword } = req.body;
-  const decoded = await tokenService.verifyToken(token);
-  const user = await User.findById(decoded.sub);
-  if (!user) {
-    throw new CustomError(403, "Invalid Token", true);
-  }
   const { message } = await authService.resetPassword(token, newPassword);
   res.status(200).json({ message });
 });
 const sentResetPasswordForm = handleCatchError(async (req, res) => {
   const { token } = req.query;
-  const decoded = tokenService.verifyToken(token);
-  const resetForm = authService.CreateRsetForm(token);
+  const decoded = await tokenService.verifyToken(token);
+  const resetForm = await authService.CreateRsetForm(token);
   res.status(200).send(resetForm);
 });
 // GOOGLE AUTH
