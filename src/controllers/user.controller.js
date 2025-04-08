@@ -2,8 +2,9 @@ import { userService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 
 const getProfile = handleCatchError(async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const myProfile = await userService.getUserProfile(token);
+  const { id } = req.user;
+  const myProfile = await userService.getUserProfile(id);
+
   res.status(200).send(myProfile);
 });
 

@@ -1,6 +1,5 @@
-import { use } from "passport";
 import { User } from "../models/index.js";
-import { tokenService, userService } from "../services/index.js";
+import { tokenService } from "../services/index.js";
 import { CustomError } from "../utils/index.js";
 
 const getUserByEmail = async (email) => {
@@ -14,25 +13,26 @@ const getUserByEmail = async (email) => {
 const getUserById = async (id) => {
   const user = await User.findById(id);
   if (!user) {
-    throw new CustomError(400, "No user found with this id");
+    throw new CustomError(400, "No user found with this id", true);
   }
   return user;
 };
 
-const getUserProfile = async (token) => {
-  const decoded = tokenService.verifyToken(token);
-  const user = await getUserById(decoded.id);
+const getUserProfile = async (id) => {
+  const user = await getUserById(id);
   return user;
 };
 
 const updateUserName = async (id, userName) => {
-  const updatedUser = await User.findByIdAndUpdate(
-    id,
-    { userName },
-    { new: true, runValidators: true }
-  );
+  const user = await User.findById(id);
+  if (!user) {
+    throw new CustomError(400, "No user found with this id", true);
+  }
+  user.userName = userName;
+  const updatedUser = await user.save();
+
   if (!updatedUser) {
-    throw new CustomError(400, "No user found with this id");
+    throw new CustomError(400, "Failed to update user name", true);
   }
   return updatedUser;
 };

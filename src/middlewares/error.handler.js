@@ -37,6 +37,7 @@ const handleGlobalError = (error, req, res, next) => {
       error.isOperational === false ? "something went wrong" : error.message,
     status: error.status,
   };
+  console.error(error.message);
   res.status(error.statusCode).json(response);
 };
 

@@ -16,7 +16,7 @@ const generateToken = (id, tokenType, expiresIn) => {
   return sign(payload, envVar.token.jwtSecret);
 };
 
-const verifyToken = async (token) => {
+const verifyToken = (token) => {
   const decoded = verify(token, envVar.token.jwtSecret);
   if (!decoded) {
     throw new CustomError(403, "Unauthorized - Invalid token.", true);
