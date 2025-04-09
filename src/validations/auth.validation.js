@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { validatePassword } from "./custom.validation.js";
 const regeisterSchema = {
   body: Joi.object().keys({
     userName: Joi.string().required(),
@@ -35,7 +36,7 @@ const resetFormSchema = {
   }),
 };
 
-export {
+export default {
   regeisterSchema,
   loginSchema,
   resetFormSchema,

@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CustomError, pick } from "../utils/index";
+import { CustomError, pick } from "../utils/index.js";
 
 //define validate middleware to valiadte user request against schema
 const validate = (schema) => (req, res, next) => {
