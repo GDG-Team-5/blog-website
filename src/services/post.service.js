@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Post, User } from "../models/index.js";
 import userService from "./user.service.js";
 import { CustomError } from "../utils/index.js";
@@ -9,9 +10,11 @@ const addToUserFeed = async (user, postId) => {
     throw new CustomError(400, "Failed to update user feed", true);
   }
 };
+
 const removeFromUserFeed = async (authorId, postId) => {
   const user = await userService.getUserById(authorId);
-  user.posts = user.posts.filter((post) => post !== postId);
+  const postIdObjectId = new mongoose.Types.ObjectId(postId);
+  user.posts = user.posts.filter((post) => !post.equals(postIdObjectId));
   const updatedUser = await user.save();
   if (!updatedUser) {
     throw new CustomError(400, "Failed to update user feed", true);
