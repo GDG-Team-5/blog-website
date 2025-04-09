@@ -1,13 +1,26 @@
-import { protectRoute } from "../../middlewares/index.js";
-import { postController } from "../../controllers/index.js";
 import express from "express";
+import { protectRoute, validate } from "../../middlewares/index.js";
+import { postController } from "../../controllers/index.js";
+import { postValidation } from "../../validations/index.js";
 
 const Router = express.Router();
 Router.route("/")
-  .post(protectRoute, postController.createPost)
+  .post(
+    validate(postValidation.postCreateSchema),
+    protectRoute,
+    postController.createPost
+  )
   .get(protectRoute, postController.getAllPosts);
 
 Router.route("/:id")
-  .put(protectRoute, postController.updatePost)
-  .delete(protectRoute, postController.deletePost);
+  .put(
+    validate(postValidation.postUpdateSchema),
+    protectRoute,
+    postController.updatePost
+  )
+  .delete(
+    validate(postValidation.postDeleteSchema),
+    protectRoute,
+    postController.deletePost
+  );
 export default Router;
