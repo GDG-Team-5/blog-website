@@ -1,5 +1,5 @@
 import Joi from "joi";
-
+import { validateObjectId } from "./custom.validation.js";
 const postCreateSchema = {
   body: Joi.object().keys({
     title: Joi.string().required(),
@@ -11,7 +11,7 @@ const postCreateSchema = {
 
 const postUpdateSchema = {
   params: Joi.object().keys({
-    id: Joi.string().required(),
+    id: Joi.string().required().custom(validateObjectId),
   }),
   body: Joi.object()
     .keys({
@@ -25,7 +25,7 @@ const postUpdateSchema = {
 
 const postDeleteSchema = {
   params: Joi.object().keys({
-    id: Joi.string().required(),
+    id: Joi.string().required().custom(validateObjectId),
   }),
 };
 
