@@ -57,10 +57,60 @@ const logout = async (req, res) => {
 };
 
 const handlePasswordResetRequest = async (email) => {
+  const message = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Password Reset Successful</title>
+        <style>
+          body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+          }
+          .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+          }
+          h1 {
+            color: #28a745;
+            margin-bottom: 20px;
+          }
+          p {
+            color: #555;
+            margin-bottom: 15px;
+          }
+          a {
+            color: #007bff;
+            text-decoration: none;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Password Reset Successfully</h1>
+          <p>Your password has been successfully reset.</p>
+          <p>You can now <a href="/login">log in</a> with your new password.</p>
+        </div>
+      </body>
+      </html>
+    `;
   const user = await userService.getUserByEmail(email);
   const resetToken = await tokenService.generateResetToken(user.id);
   await emailService.sendResetPasswordLink(email, resetToken);
-  return { message: "Password reset link sent to your email." };
+  return message;
 };
 
 const resetPassword = async (token, newPassword) => {
@@ -73,10 +123,10 @@ const resetPassword = async (token, newPassword) => {
   user.tokenExpiration = null;
   user.resetToken = null;
   await user.save();
-  return { message: "Password reset successfully" };
+  return `<h1>Password reset successfully</h1>`;
 };
 const CreateRsetForm = async (token) => {
-  const decoded = await tokenService.verifyToken(token);
+  const decoded = tokenService.verifyToken(token);
   const user = await User.findById(decoded.sub);
   if (!user) {
     throw new CustomError(403, "Invalid Token", true);

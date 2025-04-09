@@ -19,10 +19,7 @@ Router.route("/reset-password/request").post(
   checkUser,
   authController.handlePasswordResetRequest
 );
-Router.route("/reset-password-form").get(
-  validate(authValidator.resetFormSchema),
-  authController.sentResetPasswordForm
-);
+Router.route("/reset-password-form").get(authController.sentResetPasswordForm);
 Router.route("/reset-password").post(
   validate(authValidator.resetPasswordSchema),
   authController.resetPassword

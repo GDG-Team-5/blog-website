@@ -38,8 +38,8 @@ const handlePasswordResetRequest = handleCatchError(async (req, res) => {
 });
 const resetPassword = handleCatchError(async (req, res) => {
   const { token, newPassword } = req.body;
-  const { message } = await authService.resetPassword(token, newPassword);
-  res.status(200).json({ message });
+  const message = await authService.resetPassword(token, newPassword);
+  res.status(200).send(message);
 });
 const sentResetPasswordForm = handleCatchError(async (req, res) => {
   const { token } = req.query;

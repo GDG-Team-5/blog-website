@@ -7,7 +7,8 @@ const regeisterSchema = {
     password: Joi.string()
       .min(8)
       .default("Password1234")
-      .custom(validatePassword),
+      .custom(validatePassword)
+      .required(),
   }),
 };
 
@@ -30,16 +31,10 @@ const resetPasswordSchema = {
     newPassword: Joi.string().min(8).custom(validatePassword),
   }),
 };
-const resetFormSchema = {
-  query: Joi.object().keys({
-    token: Joi.string().email().required(),
-  }),
-};
 
 export default {
   regeisterSchema,
   loginSchema,
-  resetFormSchema,
   resetRequestSchema,
   resetPasswordSchema,
 };

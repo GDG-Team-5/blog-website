@@ -25,6 +25,7 @@ const convertError = (error, req, res, next) => {
   }
   //check if the error is found in the generic errors
   if (error.name in genericErrorHandlers) {
+    console.log("generic error", error);
     return next(genericErrorHandlers[error.name]());
   }
   //log for unknown errors
@@ -37,7 +38,7 @@ const handleGlobalError = (error, req, res, next) => {
       error.isOperational === false ? "something went wrong" : error.message,
     status: error.status,
   };
-  console.error(error.message);
+  console.error("error", error.message);
   res.status(error.statusCode).json(response);
 };
 
