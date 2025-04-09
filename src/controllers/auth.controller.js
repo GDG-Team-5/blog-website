@@ -43,7 +43,7 @@ const resetPassword = handleCatchError(async (req, res) => {
 });
 const sentResetPasswordForm = handleCatchError(async (req, res) => {
   const { token } = req.query;
-  const decoded = await tokenService.verifyToken(token);
+  const decoded = tokenService.verifyToken(token);
   const resetForm = await authService.CreateRsetForm(token);
   res.status(200).send(resetForm);
 });

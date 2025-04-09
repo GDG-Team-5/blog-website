@@ -1,2 +1,3 @@
 import envSchema from "./env.validation.js";
-export { envSchema };
+import authValidator from "./auth.validation.js";
+export { envSchema, authValidator };
