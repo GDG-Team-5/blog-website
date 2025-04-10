@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import { authController } from "../../controllers/index.js";
 import { validate, checkUser } from "../../middlewares/index.js";
 import { authValidator } from "../../validations/index.js";
@@ -25,15 +26,12 @@ Router.route("/reset-password").post(
   authController.resetPassword
 );
 
-// Router.route("/google").post(
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-// Router.route("/google/callback").get(
-//   passport.authenticate("google", { failureRedirect: "/login" }),
-//   (req, res) => {
-//     // Successful authentication, redirect home.
-//     res.redirect("/");
-//   }
-// );
+Router.route("/google").post(
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+Router.route("/google/callback").get(
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  authController.sendTOken
+);
 
 export default Router;
