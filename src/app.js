@@ -34,10 +34,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 initializeGoogleAuth();
 
-//api
 app.use("/api/v1", APIRoute);
 
-// //unknown api handler
+//unknown api handler
 app.all("/*unknown", (req, res, next) => {
   const message = `${req.originalUrl} not found`;
   const statusCode = 404;
@@ -45,7 +44,6 @@ app.all("/*unknown", (req, res, next) => {
   next(error);
 });
 
-//error handlers
 app.use(errorHandler.convertError);
 app.use(errorHandler.handleGlobalError);
 
