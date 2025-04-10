@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { envVar } from "../configs/env.variable.js";
-import { CustomError } from "../utils/index.js";
+import logger from "../configs/wins.logger.js";
+import { CustomError, logError } from "../utils/index.js";
 const emailSettings = {
   host: envVar.mail.host,
   port: envVar.mail.port,
@@ -24,8 +25,8 @@ const sendEmail = async (recipient, subject, html) => {
   try {
     const sentEmail = await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.error("Error sending email:", error);
-    throw new CustomError(500, "Email not sent", false);
+    logError(error);
+    throw new CustomError(500, "failed to sent email", false);
   }
 };
 
@@ -39,9 +40,9 @@ const sendResetPasswordLink = async (email, token) => {
       <p>This link will expire shortly. If you did not request a password reset, please ignore this email.</p>
     `;
     await sendEmail(email, subject, html);
-    console.log(`Reset password email sent to ${email}`);
+    logger.infoLogger.info(`Reset password email sent to ${email}`);
   } catch (error) {
-    console.error("Error in sendResetPasswordLink:", error);
+    logError(error);
     throw new CustomError(500, "Failed to send reset password link", false);
   }
 };

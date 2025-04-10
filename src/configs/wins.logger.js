@@ -1,6 +1,14 @@
-import { format, transports, createLogger } from "winston";
+import { format, transports, createLogger, addColors } from "winston";
 const { combine, timestamp, json, simple, colorize } = format;
 import { envVar } from "./env.variable.js";
+
+addColors({
+  error: "red bold",
+  warn: "yellow bold",
+  info: "cyan bold",
+  http: "magenta bold",
+  debug: "blue bold",
+});
 
 // file transoport for http logs
 const httpFile = new transports.File({
@@ -20,7 +28,7 @@ const emailFile = new transports.File({
 });
 // console transport
 const consoleTransport = new transports.Console({
-  format: combine(colorize(), simple()),
+  format: combine(colorize({ all: true }), simple()),
 });
 //create http logger
 const httpLogger = createLogger({
@@ -40,10 +48,15 @@ const emailLogger = createLogger({
   format: combine(json(), timestamp()),
   transports: [emailFile, consoleTransport],
 });
+const infoLogger = createLogger({
+  level: "info",
+  format: combine(colorize({ all: true })),
+  transports: [consoleTransport],
+});
 // remove console transport if it is in production stage
 if (envVar.env === "production") {
   httpLogger.remove(consoleTransport);
   errorLogger.remove(consoleTransport);
   emailLogger.remove(consoleTransport);
 }
-export default { httpLogger, errorLogger, emailLogger };
+export default { httpLogger, errorLogger, emailLogger, infoLogger };

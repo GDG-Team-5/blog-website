@@ -1,16 +1,18 @@
 import connectDB from "./configs/database.js";
 import { envVar } from "./configs/env.variable.js";
+import { logError } from "./utils/index.js";
+import logger from "./configs/wins.logger.js";
 import app from "./app.js";
 
 const sever = app.listen(envVar.port, async () => {
-  console.log(`Server is running on port ${envVar.port}`);
-  console.log(`http://localhost:${envVar.port}`);
+  logger.infoLogger.info(`Server is running at port ${envVar.port}`);
+  logger.infoLogger.info(`http://localhost:${envVar.port}`);
   await connectDB();
 });
 
 // This function Handle uncaught exceptions and unhandled rejections
 const handleUncaughtException = (error) => {
-  console.log(error.stack);
+  logError(error);
   handleExit(sever);
 };
 
@@ -18,7 +20,7 @@ const handleUncaughtException = (error) => {
 const handleExit = (server) => {
   if (sever) {
     sever.close(() => {
-      console.log("Server is shutting down");
+      logger.infoLogger.warn("Server is shutting down");
       process.exit(0);
     });
   } else {
@@ -29,7 +31,7 @@ const handleExit = (server) => {
 process.on("uncaughtException", handleUncaughtException);
 process.on("unhandledRejection", handleUncaughtException);
 process.on("SIGTERM", (sig) => {
-  console.log(sig);
+  logger.infoLogger.info(sig);
   if (sever) {
     sever.close();
   }

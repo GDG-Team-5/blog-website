@@ -24,6 +24,16 @@ Router.route("/reset-password").post(
   validate(authValidator.resetPasswordSchema),
   authController.resetPassword
 );
-// Router.route("/google").post("")
+
+// Router.route("/google").post(
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
+// Router.route("/google/callback").get(
+//   passport.authenticate("google", { failureRedirect: "/login" }),
+//   (req, res) => {
+//     // Successful authentication, redirect home.
+//     res.redirect("/");
+//   }
+// );
 
 export default Router;

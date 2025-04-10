@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import { CustomError } from "./utils/index.js";
 import { errorHandler } from "./middlewares/index.js";
 import APIRoute from "./routes/v1/index.js";
@@ -8,11 +9,13 @@ import session from "express-session";
 import { initializeGoogleAuth } from "./controllers/auth.controller.js";
 import passport from "passport";
 import { envVar } from "./configs/env.variable.js";
+import { morganFormat, stream } from "./configs/request.logger.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(morgan(morganFormat, { stream }));
 app.use(
   session({
     secret: envVar.session.secret,

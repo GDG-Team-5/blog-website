@@ -29,7 +29,7 @@ const envSchema = Joi.object()
     SESSION_SECRET: Joi.string().required(),
     SERVER_URL: Joi.string().required(),
 
-    LOG_FILE_PATH: Joi.string().required.description("log path"),
+    LOG_FILE_PATH: Joi.string().required().description("log path"),
   })
   .unknown();
 export default envSchema;

@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { CustomError } from "../utils/index.js";
+import { CustomError, logError } from "../utils/index.js";
 
 // This function is used to format the output of the Mongoose schema
 const format = (schema, option) => {
@@ -30,6 +30,7 @@ const isEmailUsed = (schema) => {
     try {
       return !!(await this.findOne({ email: email }));
     } catch (error) {
+      logError(error);
       throw new CustomError(400, `Your Email is used `, true);
     }
   };
@@ -40,6 +41,7 @@ const verifyPassword = (schema) => {
     try {
       return await bcrypt.compare(password, this.password);
     } catch (error) {
+      logError(error);
       throw new CustomError(403, `password checking failed`, true);
     }
   };

@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CustomError, pick } from "../utils/index.js";
+import { CustomError, logError, pick } from "../utils/index.js";
 
 //define validate middleware to valiadte user request against schema
 const validate = (schema) => (req, res, next) => {
@@ -15,6 +15,7 @@ const validate = (schema) => (req, res, next) => {
     .prefs({ errors: { label: "key" } })
     .validate(validRequest, options);
   if (error) {
+    logError(error);
     const message = error.details.map((err) => err.message).join(",");
     return next(new CustomError(400, message, true));
   }

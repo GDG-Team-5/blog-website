@@ -20,7 +20,7 @@ export const envVar = {
   dataBaseUrl: env.DB_URL,
   env: env.NODE_ENV,
   serverUrl: env.SERVER_URL,
-  fileLogPath: LOG_FILE_PATH,
+  fileLogPath: env.LOG_FILE_PATH,
   token: {
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
