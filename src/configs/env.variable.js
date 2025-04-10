@@ -20,6 +20,7 @@ export const envVar = {
   dataBaseUrl: env.DB_URL,
   env: env.NODE_ENV,
   serverUrl: env.SERVER_URL,
+  fileLogPath: LOG_FILE_PATH,
   token: {
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
@@ -27,13 +28,6 @@ export const envVar = {
     emailVerificationTokenEXp: env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
     jwtSecret: env.JWT_SECRET_KEY,
   },
-  // mailtrap: {
-  //   userName: env.MAILTRAP_USERNAME,
-  //   password: env.MAILTRAP_PASSWORD,
-  //   host: env.MAILTRAP_HOST,
-  //   port: env.MAILTRAP_PORT,
-  // },
-
   mail: {
     host: env.EMAIL_HOST,
     port: env.EMAIL_PORT,
