@@ -1,17 +1,16 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import { CustomError, handleCatchError } from "../utils/index.js";
+import { handleCatchError } from "../utils/index.js";
 import { User } from "../models/index.js";
-import { authService, tokenService, userService } from "../services/index.js";
+import { authService, tokenService } from "../services/index.js";
 import { envVar } from "../configs/env.variable.js";
 
 const googleAuthConfig = {
   clientID: envVar.googeClient.id,
   clientSecret: envVar.googeClient.secret,
-  callbackURL: "http://localhost:5000/api/auth/google/callback",
+  callbackURL: `${envVar.serverUrl}/api/v1/auth/google/callback`,
   passReqToCallback: true,
 };
-
 //register user middleware
 const register = handleCatchError(async (req, res) => {
   const { message, user } = await authService.register(req.body);
@@ -47,6 +46,11 @@ const sentResetPasswordForm = handleCatchError(async (req, res) => {
   const resetForm = await authService.CreateRsetForm(token);
   res.status(200).send(resetForm);
 });
+const sendTOken = handleCatchError(async (req, res) => {
+  const token = tokenService.generateToken(req.user.id);
+  return token;
+});
+
 // GOOGLE AUTH
 const googleVerifyCallback = async (
   request,
@@ -106,6 +110,5 @@ export default {
   handlePasswordResetRequest,
   resetPassword,
   sentResetPasswordForm,
-  googleVerifyCallback,
-  googleAuthConfig,
+  sendTOken,
 };
