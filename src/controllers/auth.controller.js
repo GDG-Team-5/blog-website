@@ -18,8 +18,10 @@ const login = handleCatchError(async (req, res) => {
 });
 
 const logout = handleCatchError(async (req, res) => {
-  const { id } = req.user;
-  const { message } = await authService.logout(id);
+  if (!req.user) {
+    throw new CustomError(401, "Unauthorized", true);
+  }
+  delete req.user;
   res.status(200).json({ message });
 });
 

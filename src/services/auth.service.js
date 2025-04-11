@@ -38,24 +38,6 @@ const login = async (email, password) => {
   return { message: "Login successfully", token: token };
 };
 
-const logout = async (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Error destroying session:", err);
-      return res.status(500).json({ message: "Failed to logout." });
-    }
-  });
-
-  try {
-    res.cookie("jwt", "", { maxAge: 0 });
-    res.cookie("connect.sid", "", { maxAge: 0 });
-    res.status(200).json({ message: "Logged out successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-    console.log("Error in logout controller", error.message);
-  }
-};
-
 const handlePasswordResetRequest = async (email) => {
   const message = `
       <!DOCTYPE html>
@@ -206,7 +188,6 @@ const CreateRsetForm = async (token) => {
 export default {
   register,
   login,
-  logout,
   handlePasswordResetRequest,
   resetPassword,
   CreateRsetForm,
