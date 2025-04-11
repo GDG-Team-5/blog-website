@@ -6,12 +6,13 @@ import { errorHandler } from "./middlewares/index.js";
 import APIRoute from "./routes/v1/index.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import { initializeGoogleAuth } from "./controllers/auth.controller.js";
-import passport from "passport";
+import passport from "./configs/passprt.js";
 import { envVar } from "./configs/env.variable.js";
 import { morganFormat, stream } from "./configs/request.logger.js";
 const app = express();
+
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -29,10 +30,8 @@ app.use(
     },
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
-initializeGoogleAuth();
 
 app.use("/api/v1", APIRoute);
 
