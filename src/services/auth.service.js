@@ -39,8 +39,14 @@ const login = async (email, password) => {
 };
 
 const handlePasswordResetRequest = async (email) => {
-  const message = `
-      <!DOCTYPE html>
+  const user = await userService.getUserByEmail(email);
+  const resetToken = await tokenService.generateResetToken(user.id);
+  await emailService.sendResetPasswordLink(email, resetToken);
+  return { message: "Password reset link sent to your email" };
+};
+
+const resetPassword = async (token, newPassword) => {
+  const message = `<!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
@@ -84,19 +90,11 @@ const handlePasswordResetRequest = async (email) => {
         <div class="container">
           <h1>Password Reset Successfully</h1>
           <p>Your password has been successfully reset.</p>
-          <p>You can now <a href="/login">log in</a> with your new password.</p>
+          <p>You can now <a href="api/v1/auth/login">log in</a> with your new password.</p>
         </div>
       </body>
-      </html>
-    `;
-  const user = await userService.getUserByEmail(email);
-  const resetToken = await tokenService.generateResetToken(user.id);
-  await emailService.sendResetPasswordLink(email, resetToken);
-  return message;
-};
-
-const resetPassword = async (token, newPassword) => {
-  const decoded = await tokenService.verifyToken(token);
+      </html>`;
+  const decoded = tokenService.verifyToken(token);
   const user = await User.findById(decoded.sub);
   if (!user) {
     throw new CustomError(400, "Invalid token", true);
@@ -105,7 +103,7 @@ const resetPassword = async (token, newPassword) => {
   user.tokenExpiration = null;
   user.resetToken = null;
   await user.save();
-  return `<h1>Password reset successfully</h1>`;
+  return message;
 };
 const CreateRsetForm = async (token) => {
   const decoded = tokenService.verifyToken(token);
