@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import MongoStore from "connect-mongo";
 import { CustomError } from "./utils/index.js";
 import { errorHandler } from "./middlewares/index.js";
 import APIRoute from "./routes/v1/index.js";
@@ -28,6 +29,12 @@ app.use(
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "strict",
     },
+    store: MongoStore.create({
+      mongoUrl: envVar.dataBaseUrl,
+      dbName: "blog-website",
+      collectionName: "sessions",
+      ttl: 24 * 60 * 60,
+    }),
   })
 );
 app.use(passport.initialize());
