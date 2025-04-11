@@ -48,10 +48,42 @@ const handleGoogleAuthSuccess = (req, res) => {
     tokenTypes.accessToken,
     DateTime.now().plus({ minutes: envVar.token.acessTokenExp })
   );
-  res.status(200).json({
-    message: "Login successful with your Google account",
-    token: token,
-  });
+  res.setHeader("Content-Type", "text/html");
+  res.status(200).send(`<!DOCTYPE html>
+    <html lang="en">
+    <head> 
+    <title>Login Successful</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f8f9fa;
+            }
+            .container {
+                text-align: center;
+            }
+            #token {
+                word-wrap: break-word;
+                width: 100%;
+            }
+        </style>
+     </head>
+    <body>
+        <div class="container">
+            <h2>Login Successful</h2>
+            <p>You have successfully logged in.</p>
+            <p>Your access token is:</p>
+            <div id="token">${token}</div> 
+             <p>
+            </p>
+        </div>
+    </body>
+    </html>
+  `);
 };
 
 const handleGoogleAuthError = (req, res, next) => {
