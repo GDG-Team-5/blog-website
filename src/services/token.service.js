@@ -43,7 +43,6 @@ const generateResetToken = async (userId) => {
     seconds: envVar.token.resetPasswordToknExp,
   });
   const resetToken = generateToken(userId, tokenType, expiresIn);
-  await saveToken(userId, resetToken, tokenType);
   return resetToken;
 };
 export default { generateToken, verifyToken, generateResetToken };
