@@ -95,7 +95,7 @@ const initiateGoogleAuth = passport.authenticate("google", {
 });
 
 const handleGoogleAuthCallback = passport.authenticate("google", {
-  failureRedirect: "/login",
+  failureRedirect: `${envVar.serverUrl}/api/v1/auth/login`,
   session: true,
 });
 

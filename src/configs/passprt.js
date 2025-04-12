@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { envVar } from "../configs/env.variable.js";
 import { User } from "../models/index.js";
-import { logError } from "../utils/index.js";
+import { CustomError, logError } from "../utils/index.js";
 
 const googleAuthConfig = {
   clientID: envVar.googeClient.id,
@@ -19,18 +19,20 @@ const googleVerifyCallback = async (
   done
 ) => {
   try {
-    const { email, name } = profile._json;
+    const email = profile.emails[0].value;
     const user = await User.findOne({ email });
     if (user) {
       return done(null, user);
+    } else {
+      return done(
+        new CustomError(
+          403,
+          "No user found with this email.  Please create an account.",
+          true
+        ),
+        null
+      );
     }
-    const newUser = new User({
-      email: email,
-      userName: name,
-      password: "Password123",
-    });
-    await newUser.save();
-    return done(null, newUser);
   } catch (error) {
     logError(error);
     return done(error, null);
