@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { DateTime } from "luxon";
 import { envVar } from "../configs/env.variable.js";
 import { CustomError } from "../utils/index.js";
-import { User, Token } from "../models/index.js";
+import { Token } from "../models/index.js";
 import { tokenTypes } from "../configs/token.types.js";
 const { sign, verify } = jwt;
 
