@@ -10,7 +10,7 @@ Router.route("/")
     protectRoute,
     postController.createPost
   )
-  .get(protectRoute, postController.getAllPosts);
+  .get(postController.getAllPosts);
 
 Router.route("/:id")
   .put(
