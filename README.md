@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository contains the backend API for a modern blog platform built with Node.js and Express.js. The API provides a robust foundation for creating, managing, and interacting with blog content, along with comprehensive user authentication and profile management features.
+This repository contains the backend API for a modern blog platform built with Node.js and Express.js. The API provides a robust foundation for creating, managing, and interacting with blog content, along with comprehensive user authentication and profile management features.You can find the full API documentation on Postman here: https://documenter.getpostman.com/view/43872045/2sB2ca5ed7
 
 ### Purpose
 The blog platform is designed to provide a secure, scalable, and feature-rich environment for:
