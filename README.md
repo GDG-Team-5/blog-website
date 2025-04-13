@@ -217,7 +217,7 @@ Content-Type: application/json
 
 #### 3. Google OAuth Login
 ```http
-GET /api/v1/auth/google
+POST /api/v1/auth/google
 ```
 This will redirect to Google's login page. After successful authentication, you'll be redirected back with an access token.
 
