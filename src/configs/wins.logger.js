@@ -10,22 +10,23 @@ addColors({
   debug: "blue bold",
 });
 
-// file transoport for http logs
-const httpFile = new transports.File({
-  level: "info",
-  filename: `${envVar.fileLogPath}/httpLogs.log`,
-  json: true,
-});
-// file transoport for error logs
-const errFile = new transports.File({
-  filename: `${envVar.fileLogPath}/errorLogs.log`,
-  level: "error",
-});
-//file transport for sent  email logs
-const emailFile = new transports.File({
-  filename: `${envVar.fileLogPath}/emailSent.log`,
-  level: "info",
-});
+// // file transoport for http logs
+// const httpFile = new transports.File({
+//   level: "info",
+//   filename: `${envVar.fileLogPath}/httpLogs.log`,
+//   json: true,
+// });
+// // file transoport for error logs
+// const errFile = new transports.File({
+//   filename: `${envVar.fileLogPath}/errorLogs.log`,
+//   level: "error",
+// });
+// //file transport for sent  email logs
+// const emailFile = new transports.File({
+//   filename: `${envVar.fileLogPath}/emailSent.log`,
+//   level: "info",
+// });
+
 // console transport
 const consoleTransport = new transports.Console({
   format: combine(colorize({ all: true }), simple()),
@@ -34,19 +35,19 @@ const consoleTransport = new transports.Console({
 const httpLogger = createLogger({
   level: envVar.env === "production" ? "info" : "debug",
   format: json(),
-  transports: [httpFile, consoleTransport],
+  transports: [consoleTransport],
 });
 //create error logger
 const errorLogger = createLogger({
   level: "error",
   format: combine(json(), timestamp()),
-  transports: [errFile, consoleTransport],
+  transports: [consoleTransport],
 });
 //create email sent logger
 const emailLogger = createLogger({
   level: "info",
   format: combine(json(), timestamp()),
-  transports: [emailFile, consoleTransport],
+  transports: [consoleTransport],
 });
 const infoLogger = createLogger({
   level: "info",
@@ -54,17 +55,9 @@ const infoLogger = createLogger({
   transports: [consoleTransport],
 });
 // remove console transport if it is in production stage
-if (envVar.env === "production") {
-  httpLogger.remove(errFile);
-  errorLogger.remove(errFile);
-  emailLogger.remove(errFile);
-
-  httpLogger.remove(emailFile);
-  errorLogger.remove(emailFile);
-  emailLogger.remove(emailFile);
-
-  httpLogger.remove(httpFile);
-  errorLogger.remove(httpFile);
-  emailLogger.remove(httpFile);
-}
+// if (envVar.env === "production") {
+//   httpLogger.remove(consoleTransport);
+//   errorLogger.remove(consoleTransport);
+//   emailLogger.remove(consoleTransport);
+// }
 export default { httpLogger, errorLogger, emailLogger, infoLogger };
