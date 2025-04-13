@@ -1,7 +1,6 @@
 # Blog Website API Documentation
 
 ## Introduction
-
 This repository contains the backend API for a modern blog platform built with Node.js and Express.js. The API provides a robust foundation for creating, managing, and interacting with blog content, along with comprehensive user authentication and profile management features.
 You can find the full API documentation on Postman here:  
 🔗 [View API on Postman] https://documenter.getpostman.com/view/43872045/2sB2ca5ed7
@@ -30,8 +29,6 @@ The blog platform is designed to provide a secure, scalable, and feature-rich en
    - Middleware-based authentication
    - Request validation
    - Error handling
-
-
 ### Technical Implementation
 The backend is built using:
 - **Node.js** for the runtime environment
@@ -75,31 +72,12 @@ This API is designed for:
   - Configurable token expiration
   - Secure token storage
 
-### 2. Blog Post Management
-- **Post Creation **
-  - Rich text editor support
-### 2. User Profile Management
-
-### 3. Security Features
 - **Data Protection**
   - Password encryption
   - Secure session handling
   - CSRF protection
   - XSS prevention
 
-- **Access Control**
-  - Role-based permissions
-  - Content ownership verification
-  - API rate limiting
-  - IP-based security measures
-
-### 4. Performance Optimization
-- **Database Optimization**
- 
-  - Efficient data modeling
-  - Query optimization
-  - Connection pooling
-### 5. Developer Experience
 - **API Documentation**
   - Comprehensive endpoint documentation
   - Example requests and responses
@@ -133,6 +111,7 @@ npm install
 ```
 3. Create a `.env` file in the root directory with the following variables:
 ```env
+
 DB_URL=mongodb://localhost:27017/blog-website
 PORT=3000
 
@@ -161,7 +140,6 @@ GOOGLE_CLIENT_ID =173834096589-4jshddnvf4s0c5fggnt5tp6mgi39up8m.apps.googleuserc
 GOOGLE_CLIENT_SECRET =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
 SESSION_SECRET = session_secret
 SERVER_URL=http://localhost:3000
-
 ```
 
 ### Running the Server
