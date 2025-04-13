@@ -15,21 +15,14 @@ The blog platform is designed to provide a secure, scalable, and feature-rich en
 1. **Authentication System**
    - Secure user registration and login
    - Social authentication via Google OAuth
-   - Password management and recovery
-   - Session handling with JWT tokens
-
 2. **Content Management**
    - CRUD operations for blog posts
    - Content organization and categorization
    - Media handling and storage
-   - Content visibility controls
 
 3. **User Management**
    - Profile customization
    - Activity tracking
-   - User preferences
-   - Security settings
-
 4. **API Architecture**
    - RESTful endpoints
    - Middleware-based authentication
