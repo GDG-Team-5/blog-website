@@ -5,11 +5,24 @@ const morganFormat =
 //define stream option to redirect morgan logs to Logger
 const stream = {
   write: (data) => {
-    const [ipAddress, method, url] = data.trim().split(" ");
+    const [
+      userName,
+      ipAddress,
+      method,
+      url,
+      status,
+      httpVersion,
+      responseTime,
+    ] = data.trim().split(" ");
     return logger.httpLogger.info("HTTP Acess Log", {
+      userName: userName === "-" ? "anonymous" : userName,
       ipAddress: ipAddress,
       method: method,
       url: url,
+      status: Number(status),
+      httpVersion: Number(httpVersion),
+      responseTime: Number(responseTime),
+      timeStamp: new Date().toString(),
     });
   },
 };
