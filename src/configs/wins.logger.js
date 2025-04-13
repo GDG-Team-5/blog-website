@@ -55,8 +55,16 @@ const infoLogger = createLogger({
 });
 // remove console transport if it is in production stage
 if (envVar.env === "production") {
-  httpLogger.remove(consoleTransport);
-  errorLogger.remove(consoleTransport);
-  emailLogger.remove(consoleTransport);
+  httpLogger.remove(errFile);
+  errorLogger.remove(errFile);
+  emailLogger.remove(errFile);
+
+  httpLogger.remove(emailFile);
+  errorLogger.remove(emailFile);
+  emailLogger.remove(emailFile);
+
+  httpLogger.remove(httpFile);
+  errorLogger.remove(httpFile);
+  emailLogger.remove(httpFile);
 }
 export default { httpLogger, errorLogger, emailLogger, infoLogger };
