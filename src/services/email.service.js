@@ -33,6 +33,7 @@ const sendEmail = async (recipient, subject, html) => {
 const sendResetPasswordLink = async (email, token) => {
   try {
     const resetLink = `${envVar.serverUrl}/api/v1/auth/reset-password-form?token=${token}`;
+    console.log(resetLink);
     const subject = "Reset Password";
     const html = `
       <p>You have requested to reset your password. Please click on the following link to reset it:</p>

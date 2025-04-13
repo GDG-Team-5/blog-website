@@ -20,9 +20,6 @@ const stream = {
       method: method,
       url: url,
       status: Number(status),
-      httpVersion: Number(httpVersion),
-      responseTime: Number(responseTime),
-      timeStamp: new Date().toString(),
     });
   },
 };
