@@ -1,8 +1,9 @@
 # Blog Website API Documentation
 
 ## Introduction
-
-This repository contains the backend API for a modern blog platform built with Node.js and Express.js. The API provides a robust foundation for creating, managing, and interacting with blog content, along with comprehensive user authentication and profile management features.You can find the full API documentation on Postman here: https://documenter.getpostman.com/view/43872045/2sB2ca5ed7
+This repository contains the backend API for a modern blog platform built with Node.js and Express.js. The API provides a robust foundation for creating, managing, and interacting with blog content, along with comprehensive user authentication and profile management features.
+You can find the full API documentation on Postman here:  
+🔗 [View API on Postman] https://documenter.getpostman.com/view/43872045/2sB2ca5ed7
 
 ### Purpose
 The blog platform is designed to provide a secure, scalable, and feature-rich environment for:
@@ -28,8 +29,6 @@ The blog platform is designed to provide a secure, scalable, and feature-rich en
    - Middleware-based authentication
    - Request validation
    - Error handling
-   - Rate limiting
-
 ### Technical Implementation
 The backend is built using:
 - **Node.js** for the runtime environment
@@ -72,67 +71,13 @@ This API is designed for:
   - JWT-based authentication
   - Configurable token expiration
   - Secure token storage
-  - Automatic token refresh mechanism
 
-### 2. Blog Post Management
-- **Post Creation and Editing**
-  - Rich text editor support
-  - Image upload and management
-  - Draft saving functionality
-  - Auto-save feature
-
-- **Post Organization**
-  - Categorization system
-  - Tagging functionality
-  - Search and filter capabilities
-  - Sorting options (date, popularity, etc.)
-
-- **Content Visibility**
-  - Public/Private post settings
-  - Scheduled publishing
-  - Draft mode
-  - Archive functionality
-
-### 3. User Profile Management
-- **Profile Customization**
-  - Profile picture upload
-  - Bio and personal information
-  - Social media links
-  - Custom URL slugs
-
-- **Activity Tracking**
-  - Post history
-  - Comment history
-  - Reading history
-  - Engagement metrics
-
-### 4. Security Features
 - **Data Protection**
   - Password encryption
   - Secure session handling
   - CSRF protection
   - XSS prevention
 
-- **Access Control**
-  - Role-based permissions
-  - Content ownership verification
-  - API rate limiting
-  - IP-based security measures
-
-### 5. Performance Optimization
-- **Database Optimization**
-  - Indexed queries
-  - Efficient data modeling
-  - Query optimization
-  - Connection pooling
-
-- **Caching System**
-  - Redis caching
-  - Content delivery network (CDN) integration
-  - Browser caching
-  - API response caching
-
-### 6. Developer Experience
 - **API Documentation**
   - Comprehensive endpoint documentation
   - Example requests and responses
@@ -166,12 +111,34 @@ npm install
 ```
 3. Create a `.env` file in the root directory with the following variables:
 ```env
-DB_URL=your_mongodb_url
+
+DB_URL=mongodb://localhost:27017/blog-website
 PORT=3000
-NODE_ENV=development
-JWT_SECRET_KEY=your_secret_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+## Environment at which the app runs
+NODE_ENV=production
+
+# The time after wich the tokens expires
+ACESS_TOKEN_EXPIRES_IN_MINUTES=15
+REFRESH_TOKEN_EXPIRES_IN_DAYS=15
+RESET_PASSWORD_TOKEN_EXPIRES_IN_SECONDS=60
+EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS=600
+
+# The secret key used to sign the tokens
+JWT_SECRET_KEY=secret_key
+#email configuration
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=465
+EMAIL_SECURE=true
+EMAIL_FROM=your gmail # you need to use an app password
+USER_EMAIL=your gmail # you need to use an app password
+USER_PASSWORD=your gmail password # you need to use an app password
+APP_NAME=blog-website
+
+
+GOOGLE_CLIENT_ID =173834096589-4jshddnvf4s0c5fggnt5tp6mgi39up8m.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET =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
+SESSION_SECRET = session_secret
 SERVER_URL=http://localhost:3000
 ```
 

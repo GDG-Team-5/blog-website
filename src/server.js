@@ -5,7 +5,7 @@ import logger from "./configs/wins.logger.js";
 import app from "./app.js";
 
 const sever = app.listen(envVar.port, async () => {
-  const url = `=> http://localhost:${envVar.port}`;
+  const url = `=> ${envVar.serverUrl}:${envVar.port}`;
   logger.infoLogger.info(`Server is running at ${url}`);
   await connectDB();
 });
